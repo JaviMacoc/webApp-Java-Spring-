@@ -1,0 +1,6 @@
+-Que las paginas solo puedan ingresarse con Sesion
+-Implementar la edicion de la lista de usuarios con el boton editar
+-Agregar funcionalidad a:
+			-Máximo nro de resultados mostrados por página
+			-Logout de sesión
+-Revisar validación de Registro y de Login
