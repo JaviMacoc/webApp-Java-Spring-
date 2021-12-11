@@ -58,5 +58,5 @@ async function editarUsuario(){
 
 function actualizarEmailUsuario(id){
     let emailUsuario = document.getElementById('txt-email-usuario');
-    emailUsuario.outerHTML = sessionStorage.email;
+    emailUsuario.outerHTML = localStorage.email;
   }
