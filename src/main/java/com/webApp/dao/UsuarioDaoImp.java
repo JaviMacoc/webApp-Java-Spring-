@@ -34,7 +34,7 @@ public class UsuarioDaoImp implements UsuarioDao {
         List<Usuario> resultado = entityManager.createQuery(query, Usuario.class).getResultList();
         return resultado;
     }
-
+    
     @Override
     @Transactional
     public void registrar(Usuario u) {
@@ -48,6 +48,15 @@ public class UsuarioDaoImp implements UsuarioDao {
         entityManager.remove(usuario);
     }
 
+    @Override
+    @Transactional
+    public void editar(String id) {
+        Usuario usuario = entityManager.find(Usuario.class, id);
+        usuario.setNombre(id);
+        //Hacer implementacion de seteo de propiedades + persistencia
+        
+    }
+    
     @Override
     public Usuario obtenerUsuarioPorCredenciales(Usuario u) {
         String query = "FROM Usuario WHERE email = :email";
@@ -65,14 +74,4 @@ public class UsuarioDaoImp implements UsuarioDao {
         }        
         return null;
     }
-
-    @Override
-    @Transactional
-    public void editar(String id) {
-        Usuario usuario = entityManager.find(Usuario.class, id);
-        usuario.setNombre(id);
-        //Hacer implementacion de seteo de propiedades + persistencia
-        
-    }
-
 }

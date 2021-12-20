@@ -15,13 +15,12 @@ import java.util.List;
 public interface UsuarioDao {
     
     public List<Usuario> getUsuarios();
-    
+        
     public void registrar(Usuario u);
     
     public void eliminar(String id);        
 
-    public Usuario obtenerUsuarioPorCredenciales(Usuario u);
-
     public void editar(String id);
     
+    public Usuario obtenerUsuarioPorCredenciales(Usuario u);    
 }

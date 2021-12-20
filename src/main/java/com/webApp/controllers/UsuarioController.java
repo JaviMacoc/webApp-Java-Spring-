@@ -46,11 +46,7 @@ public class UsuarioController {
         }
         return usuarioDao.getUsuarios();
     }
-
-    /*@RequestMapping(value = "index.html")
-    public void getIndex(@RequestHeader(value="Authorization") String token) {
-        if(!validarToken(token)){return;}       
-    } */
+    
     @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)
     public String registrarUsuario(@RequestBody Usuario u) {        
         List<Usuario> usuarios = usuarioDao.getUsuarios();
