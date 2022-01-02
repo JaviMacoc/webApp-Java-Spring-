@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.context.annotation.Primary;
 
 
 /**
@@ -39,6 +38,6 @@ public class Usuario implements Serializable {
     private String email;
     @Getter @Setter @Column(name="password")
     private String password;
-        
-    
+    @Getter @Setter @Column(name="tipo_de_usuario")
+    private boolean usuarioAdmin;    
 }

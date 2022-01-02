@@ -8,6 +8,7 @@ async function registrarUsuarios() {
   datos.apellido = document.getElementById("apellidoHTML").value;
   datos.email = document.getElementById("emailHTML").value;
   datos.password = document.getElementById("passwordHTML").value;
+  datos.tipoDeUsuario = 'usuario';
 
   const repetirPassword = document.getElementById("repetirPasswordHTML").value;
 

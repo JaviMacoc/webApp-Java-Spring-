@@ -57,8 +57,8 @@ public class UsuarioController {
         if (!coincidencias.isEmpty()) {
             return "FAIL";
         } else {
-            Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-            String hash = argon2.hash(2, 1024, 1, u.getPassword());
+            Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);            
+            String hash = argon2.hash(2, 1024, 1, u.getPassword().getBytes());
             u.setPassword(hash);
             usuarioDao.registrar(u);
             return "EXITO";

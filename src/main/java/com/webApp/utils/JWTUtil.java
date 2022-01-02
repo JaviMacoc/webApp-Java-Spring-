@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 public class JWTUtil {
@@ -20,12 +23,14 @@ public class JWTUtil {
     private String key;
     @Value("${security.jwt.issuer}")
     private String issuer;
-    @Value("${security.jwt.ttlMillis}")
+    @Value("${security.jwt.ttlMillis}")    
     private long ttlMillis;
+    @Setter @Getter
+    private boolean usuarioAdmin;
     private final Logger log = LoggerFactory
             .getLogger(JWTUtil.class);
 
-    public String create(String id, String subject) {
+    public String create(String id, String subject, boolean usuarioAdmin) {
 
         // The JWT signature algorithm used to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;                
@@ -37,10 +42,10 @@ public class JWTUtil {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);        
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());        
 
-        //  set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer)
+        //  set the JWT Claims        
+        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).claim("admin", usuarioAdmin).setIssuer(issuer)
                 .signWith(signatureAlgorithm, signingKey);        
-
+        
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
             Date exp = new Date(expMillis);
@@ -66,4 +71,14 @@ public class JWTUtil {
 
         return claims.getId();
     }
+    public boolean esAdmin(String jwt) {
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                .parseClaimsJws(jwt).getBody();
+        return (boolean) claims.get("admin");        
+    }   
+    public Collection<Object> getClaims(String jwt) {
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                .parseClaimsJws(jwt).getBody();        
+        return claims.values();
+    }   
 }

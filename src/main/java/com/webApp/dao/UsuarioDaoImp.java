@@ -11,7 +11,6 @@ import de.mkammerer.argon2.Argon2Factory;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class UsuarioDaoImp implements UsuarioDao {
     }
     
     @Override
-    @Transactional
+    @Transactional 
     public void registrar(Usuario u) {
         entityManager.merge(u);
     }
@@ -60,7 +59,7 @@ public class UsuarioDaoImp implements UsuarioDao {
     @Override
     public Usuario obtenerUsuarioPorCredenciales(Usuario u) {
         String query = "FROM Usuario WHERE email = :email";
-        List<Usuario> lista = entityManager.createQuery(query)                
+        List<Usuario> lista = entityManager.createQuery(query)
                 .setParameter("email", u.getEmail())
                 .getResultList();
         if (lista.isEmpty()) {
@@ -71,7 +70,7 @@ public class UsuarioDaoImp implements UsuarioDao {
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         if (argon2.verify(passwordHashed, u.getPassword().getBytes())) {
             return lista.get(0);
-        }        
+        }
         return null;
     }
 }

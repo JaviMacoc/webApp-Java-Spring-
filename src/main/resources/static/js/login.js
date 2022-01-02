@@ -16,11 +16,14 @@ async function iniciarSesion() {
           }
     });
 
-    const auth = await response.text();
-    if(auth !== "FAIL"){
-        localStorage.token = auth;
+    const auth = await response.json();    
+    if(auth !== "FAIL"){        
+        localStorage.token = auth.token;        
         localStorage.email = datos.email;
-        window.location.href = "usuarios.html";
+        auth.admin ? localStorage.tdu = "admin" : null;
+        console.log(auth);
+        //window.location.href = "usuarios.html";
+        window.location.href = "#";
     }else{
         alert("El correo electrónico o nombre de usuario que ingresaste no está conectado a una cuenta. Encuentra tu cuenta e inicia sesión.");
     }
