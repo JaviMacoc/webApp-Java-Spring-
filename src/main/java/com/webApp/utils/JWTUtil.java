@@ -80,5 +80,5 @@ public class JWTUtil {
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
                 .parseClaimsJws(jwt).getBody();        
         return claims.values();
-    }   
+    }
 }
